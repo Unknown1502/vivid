@@ -26,7 +26,7 @@ export function ShareBar({ slug, title }: { slug: string; title: string }) {
   }
 
   const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    `${title} — an interactive explainer made with Vivid`,
+    `I just made a live, interactive "${title}" — poke the numbers yourself:`,
   )}&url=${encodeURIComponent(url)}`;
 
   return (

@@ -48,7 +48,7 @@ export function ImproveButton({ slug }: { slug: string }) {
             — read the pulse, suggest one improvement
           </span>
         </div>
-        <Button variant="secondary" size="sm" onClick={ask} disabled={loading}>
+        <Button variant="secondary" size="sm" onClick={ask} disabled={loading} data-testid="vivid-improve-btn">
           <Sparkles className="h-4 w-4" />
           {loading ? "Reading the pulse…" : "Improve this explainer"}
         </Button>
