@@ -157,7 +157,55 @@ export async function recordPulse(
   );
 }
 
-// ── Health check: confirm the store is reachable + the tables exist ──────────
+export async function countExplainers(): Promise<number> {
+  if (usingSupabase) {
+    try {
+      const supabase = await getSupabase();
+      const { count, error } = await supabase
+        .from("explainers")
+        .select("slug", { count: "exact", head: true });
+      if (error) return 0;
+      return count ?? 0;
+    } catch {
+      return 0;
+    }
+  }
+  try {
+    const files = await fs.readdir(DATA_DIR);
+    return files.filter((f) => f.endsWith(".json")).length;
+  } catch {
+    return 0;
+  }
+}
+
+export async function getAllSlugs(): Promise<
+  { slug: string; created_at: string }[]
+> {
+  if (usingSupabase) {
+    try {
+      const supabase = await getSupabase();
+      const { data, error } = await supabase
+        .from("explainers")
+        .select("slug, created_at")
+        .order("created_at", { ascending: false })
+        .limit(5000);
+      if (error) return [];
+      return (data ?? []) as { slug: string; created_at: string }[];
+    } catch {
+      return [];
+    }
+  }
+  try {
+    const files = await fs.readdir(DATA_DIR);
+    return files
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => ({ slug: f.replace(".json", ""), created_at: new Date().toISOString() }));
+  } catch {
+    return [];
+  }
+}
+
+
 export async function pingDb(): Promise<{ ok: boolean; error?: string }> {
   if (usingSupabase) {
     try {

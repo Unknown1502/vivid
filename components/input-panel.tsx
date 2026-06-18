@@ -54,6 +54,14 @@ export function InputPanel() {
         source,
         generation_duration_ms: Date.now() - generateStart,
       });
+      // Increment creation_count in localStorage and update visitor metadata
+      const w = window as any;
+      const prev = parseInt(localStorage.getItem("_vivid_creates") ?? "0", 10);
+      const next = prev + 1;
+      localStorage.setItem("_vivid_creates", String(next));
+      if (w.pendo?.updateOptions) {
+        w.pendo.updateOptions({ visitor: { creation_count: next } });
+      }
       // keep the composing state up through navigation
       router.push(`/v/${data.slug}`);
     } catch (e: any) {

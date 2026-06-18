@@ -9,13 +9,14 @@ import { Wordmark } from "@/components/wordmark";
 import { InputPanel } from "@/components/input-panel";
 import { TemplateRenderer } from "@/components/template-renderer";
 import { sampleFunnel } from "@/lib/samples";
+import { countExplainers } from "@/lib/db";
 
 // Vertical recipes for the wedge: what you explain → the outcome it moves.
 const RECIPES = [
   {
     icon: SlidersHorizontal,
     name: "Seat + usage pricing",
-    outcome: "Prospects model their own bill — fewer “what’ll this cost us?” stalls.",
+    outcome: "Prospects model their own bill — fewer \u201cwhat\u2019ll this cost us?\u201d stalls.",
   },
   {
     icon: BarChart3,
@@ -24,7 +25,7 @@ const RECIPES = [
   },
   {
     icon: Network,
-    name: "Source → warehouse",
+    name: "Source \u2192 warehouse",
     outcome: "Walk security through the architecture — faster reviews.",
   },
   {
@@ -39,7 +40,13 @@ const RECIPES = [
   },
 ];
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const total = await countExplainers();
+  const countLabel =
+    total > 0
+      ? `${total.toLocaleString()} explainer${total === 1 ? "" : "s"} made`
+      : "Interactive sales & onboarding explainers";
+
   return (
     <main className="relative">
       {/* Nav */}
@@ -49,7 +56,7 @@ export default function LandingPage() {
           href="#example"
           className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          See a live example ↓
+          See a live example \u2193
         </a>
       </header>
 
@@ -60,7 +67,7 @@ export default function LandingPage() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
           </span>
-          Interactive sales &amp; onboarding explainers
+          {countLabel}
         </div>
 
         <h1 className="mx-auto max-w-4xl font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl">
@@ -68,7 +75,7 @@ export default function LandingPage() {
           <span className="text-vivid">Make it pokeable.</span>
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-balance text-lg text-muted-foreground">
-          Pricing, onboarding, architecture, permissions — describe how your
+          Pricing, onboarding, architecture, permissions \u2014 describe how your
           SaaS works in one sentence and Vivid builds a live, interactive
           explainer your prospects and new hires actually understand. Shareable
           as a link.
@@ -79,10 +86,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Recipes → outcomes */}
+      {/* Recipes \u2192 outcomes */}
       <section className="container pb-14">
         <div className="kicker mb-4 text-center">
-          Built for the explanations that cost you deals & tickets
+          Built for the explanations that cost you deals &amp; tickets
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {RECIPES.map((r) => {
@@ -105,13 +112,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Seeded live example — interactive on load */}
+      {/* Seeded live example \u2014 interactive on load */}
       <section id="example" className="container scroll-mt-8 pb-20">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <div className="kicker mb-1">Already live · no typing required</div>
+            <div className="kicker mb-1">Already live \u00b7 no typing required</div>
             <h2 className="font-display text-2xl tracking-tight sm:text-3xl">
-              Your trial-to-paid funnel. Go on — drag the leak.
+              Your trial-to-paid funnel. Go on \u2014 drag the leak.
             </h2>
           </div>
           <p className="max-w-xs text-sm text-muted-foreground">

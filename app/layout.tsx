@@ -76,6 +76,8 @@ export default function RootLayout({
   if(p.get('utm_source'))v.utm_source=p.get('utm_source');
   if(p.get('utm_medium'))v.utm_medium=p.get('utm_medium');
   if(p.get('utm_campaign'))v.utm_campaign=p.get('utm_campaign');
+  var creates=parseInt(localStorage.getItem('_vivid_creates')||'0',10);
+  if(creates>0)v.creation_count=creates;
   pendo.initialize({visitor:v});
 })();`
       }} />
