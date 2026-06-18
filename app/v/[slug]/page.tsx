@@ -83,18 +83,19 @@ export default async function ExplainerPage({
           </div>
         </div>
 
-        {/* Share bar */}
-        <div className="mb-6">
-          <ShareBar slug={record.slug} title={record.config.title} />
-        </div>
-
         {/* The interactive explainer (renderer adds its own frame + hint) */}
         <div data-vivid-context="explainer">
           <TemplateRenderer config={record.config} />
         </div>
 
+        {/* Share bar — positioned after the template so it's the natural next
+            action once a viewer has poked the knobs */}
+        <div className="mt-5">
+          <ShareBar slug={record.slug} title={record.config.title} />
+        </div>
+
         {/* Novus dogfood: real interaction pulse + a tiny improve agent */}
-        <div className="mt-5 flex flex-col gap-3">
+        <div className="mt-3 flex flex-col gap-3">
           <PulseBar pulse={pulse} />
           <ImproveButton slug={record.slug} />
         </div>
