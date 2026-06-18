@@ -165,6 +165,7 @@ export const samplesByTemplate: Record<string, ExplainerConfig> = {
  * depth in the domain. Each hits a DIFFERENT template.
  */
 export const exampleChips: { label: string; description: string }[] = [
+  // Original five — one per template
   {
     label: "Seat + usage pricing",
     description:
@@ -188,5 +189,31 @@ export const exampleChips: { label: string; description: string }[] = [
   {
     label: "Build vs buy",
     description: "build vs buy for our customer data platform",
+  },
+  // Extended set — more JTBD-phrased, broader industry coverage
+  {
+    label: "Activation funnel",
+    description:
+      "our product activation funnel: from signup through first meaningful action to paid conversion, showing exactly which step leaks most",
+  },
+  {
+    label: "LTV / CAC model",
+    description:
+      "our SaaS unit economics: customer lifetime value, customer acquisition cost, payback period, and how they change with contract size",
+  },
+  {
+    label: "Permissions model",
+    description:
+      "how our role-based permissions work: what admins, editors, and viewers can each do across workspaces, projects, and data",
+  },
+  {
+    label: "Vendor comparison",
+    description:
+      "comparing three enterprise vendors on implementation time, total cost, support quality, integration depth, and security posture",
+  },
+  {
+    label: "Event-driven pipeline",
+    description:
+      "how events flow through our real-time pipeline: from producers through message queue, stream processor, into storage and customer-facing analytics",
   },
 ];
