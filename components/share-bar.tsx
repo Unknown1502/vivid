@@ -49,7 +49,12 @@ export function ShareBar({ slug, title }: { slug: string; title: string }) {
         )}
       </Button>
       <Button asChild variant="ghost" size="icon" aria-label="Share on X">
-        <a href={tweet} target="_blank" rel="noopener noreferrer">
+        <a
+          href={tweet}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => track("explainer_shared", { slug, method: "twitter" })}
+        >
           <Twitter className="h-4 w-4" />
         </a>
       </Button>
