@@ -7,6 +7,7 @@ import type { FlowConfig } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SectionLabel, TemplateHint } from "@/components/ui-kit/template-chrome";
+import { trackOnce } from "@/lib/analytics";
 
 export function FlowTemplate({ config }: { config: FlowConfig }) {
   const steps = config.steps;
@@ -22,8 +23,13 @@ export function FlowTemplate({ config }: { config: FlowConfig }) {
     });
   }, [active]);
 
-  const go = (i: number) =>
+  const go = (i: number) => {
+    trackOnce("knob_interacted", {
+      slug: (window as any).__vividSlug,
+      template: "flow",
+    });
     setActive((prev) => Math.min(steps.length - 1, Math.max(0, i ?? prev)));
+  };
 
   const current = steps[active];
   const idToIndex = React.useMemo(
