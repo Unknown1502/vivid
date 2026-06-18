@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Sparkles, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { track } from "@/lib/analytics";
 
 /**
  * The tiny improve-agent surfaced in-product: asks Vivid to read this
@@ -26,6 +27,10 @@ export function ImproveButton({ slug }: { slug: string }) {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error ?? "Couldn't get a suggestion.");
       setSuggestion(data.suggestion);
+      track("coach_suggestion_received", {
+        slug,
+        suggestion_length: data.suggestion?.length,
+      });
     } catch (e: any) {
       setError(e?.message ?? "Something went wrong.");
     } finally {

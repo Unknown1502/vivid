@@ -52,7 +52,10 @@ export function Knob({
         step={step}
         accent={accent}
         onValueChange={(v) => {
-          trackOnce("knob_interacted");
+          trackOnce("knob_interacted", {
+            slug: (window as any).__vividSlug,
+            knob_label: typeof label === "string" ? label : undefined,
+          });
           onChange(v[0]);
         }}
         aria-label={typeof label === "string" ? label : undefined}

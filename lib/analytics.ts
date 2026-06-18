@@ -16,7 +16,10 @@ export type VividEvent =
   | "explainer_rendered"
   | "knob_interacted"
   | "explainer_shared"
-  | "example_chip_used";
+  | "example_chip_used"
+  | "explainer_generated"
+  | "explainer_generation_failed"
+  | "coach_suggestion_received";
 
 type Props = Record<string, string | number | boolean | undefined>;
 

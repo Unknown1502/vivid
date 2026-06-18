@@ -19,7 +19,13 @@ export function InputPanel() {
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    track("landing_view");
+    const params = new URLSearchParams(window.location.search);
+    track("landing_view", {
+      referrer: document.referrer || undefined,
+      utm_source: params.get("utm_source") || undefined,
+      utm_medium: params.get("utm_medium") || undefined,
+      utm_campaign: params.get("utm_campaign") || undefined,
+    });
   }, []);
 
   async function generate(text: string, source: "input" | "chip" = "input") {
@@ -28,6 +34,7 @@ export function InputPanel() {
     setError(null);
     setLoading(true);
     track("generate_clicked", { source, length: desc.length });
+    const generateStart = Date.now();
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -41,9 +48,20 @@ export function InputPanel() {
             "We couldn't compose that one. Try rephrasing how it works.",
         );
       }
+      track("explainer_generated", {
+        slug: data.slug,
+        description_length: desc.length,
+        source,
+        generation_duration_ms: Date.now() - generateStart,
+      });
       // keep the composing state up through navigation
       router.push(`/v/${data.slug}`);
     } catch (e: any) {
+      track("explainer_generation_failed", {
+        error_message: (e?.message ?? "Unknown error").slice(0, 200),
+        description_length: desc.length,
+        source,
+      });
       setError(e?.message ?? "Something went wrong. Try again.");
       setLoading(false);
     }
