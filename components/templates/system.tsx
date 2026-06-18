@@ -15,6 +15,7 @@ import type { SystemConfig } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SectionLabel, TemplateHint } from "@/components/ui-kit/template-chrome";
+import { trackOnce } from "@/lib/analytics";
 
 type Pt = { x: number; y: number };
 
@@ -71,12 +72,17 @@ function useRequestPulse(points: Pt[]) {
 export function SystemTemplate({ config }: { config: SystemConfig }) {
   const [down, setDown] = React.useState<Set<string>>(new Set());
 
-  const toggleDown = (id: string) =>
+  const toggleDown = (id: string) => {
+    trackOnce("knob_interacted", {
+      slug: (window as any).__vividSlug,
+      template: "system",
+    });
     setDown((prev) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
+  };
 
   // ── Layout: request_path on a top spine, off-path nodes on a lower row ──
   // Canvas width grows with the busiest row so node boxes can NEVER overlap,
