@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Vivid — committed dark editorial theme.
+ * One accent (luminous violet). A positive→warning ramp (good/warn/bad) is
+ * RESERVED for funnel drop-off and node-down severity so it reads instantly.
+ */
+:root,
+.dark {
+  --background: 250 24% 5%;
+  --foreground: 250 16% 92%;
+
+  --card: 250 20% 8%;
+  --card-foreground: 250 16% 92%;
+
+  --popover: 250 22% 7%;
+  --popover-foreground: 250 16% 92%;
+
+  --muted: 250 14% 14%;
+  --muted-foreground: 250 9% 62%;
+
+  --border: 250 14% 16%;
+  --input: 250 14% 18%;
+
+  /* the one accent */
+  --primary: 258 95% 71%;
+  --primary-foreground: 255 40% 8%;
+
+  --accent: 250 16% 16%;
+  --accent-foreground: 250 16% 92%;
+
+  --ring: 258 95% 71%;
+
+  --radius: 0.9rem;
+
+  /* reserved severity ramp */
+  --good: 152 62% 47%;
+  --warn: 38 94% 56%;
+  --bad: 358 78% 60%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "ss01", "cv01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* editorial backdrop: a faint violet bloom from the top, grain via gradient */
+  background-image:
+    radial-gradient(70rem 40rem at 50% -10rem, hsl(258 95% 71% / 0.10), transparent 60%),
+    radial-gradient(50rem 30rem at 110% 10%, hsl(280 90% 60% / 0.06), transparent 55%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+}
+
+/* Custom, restyled scrollbar so it never reads as default */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(250 14% 22%);
+  border-radius: 999px;
+  border: 2px solid hsl(var(--background));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(250 14% 30%);
+}
+
+@layer components {
+  /* Frosted editorial panel — the shared surface across all five templates */
+  .panel {
+    @apply rounded-[var(--radius)] border bg-card/70 backdrop-blur-xl shadow-panel;
+  }
+
+  /* The little uppercase kicker that labels every template + section */
+  .kicker {
+    @apply text-[0.68rem] font-medium uppercase tracking-[0.2em] text-muted-foreground;
+  }
+
+  .hairline {
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      hsl(var(--border)) 20%,
+      hsl(var(--border)) 80%,
+      transparent
+    );
+  }
+
+  /* gradient wordmark / display flourish */
+  .text-vivid {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      105deg,
+      hsl(258 95% 78%),
+      hsl(286 92% 72%) 45%,
+      hsl(210 95% 70%)
+    );
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+  .grain {
+    background-image: radial-gradient(
+      hsl(0 0% 100% / 0.025) 1px,
+      transparent 1px
+    );
+    background-size: 3px 3px;
+  }
+  /* hide scrollbar but keep scroll (mobile rails) */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Respect reduced-motion: keep the product usable, drop the flourishes.
+   (framer-motion also honors this; this covers the CSS animations.) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
