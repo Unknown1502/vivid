@@ -148,6 +148,7 @@ export function SimulatorTemplate({ config }: { config: SimulatorConfig }) {
             <SectionLabel className="mb-0">Inputs</SectionLabel>
             <button
               onClick={reset}
+              data-testid="vivid-reset"
               className="text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               Reset
