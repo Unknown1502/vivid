@@ -119,7 +119,9 @@ export default function LandingPage() {
             behaves exactly like this one.
           </p>
         </div>
-        <TemplateRenderer config={sampleFunnel} />
+        <div data-vivid-context="demo">
+          <TemplateRenderer config={sampleFunnel} />
+        </div>
       </section>
 
       {/* Footer */}

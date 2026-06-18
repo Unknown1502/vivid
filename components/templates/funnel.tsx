@@ -170,6 +170,7 @@ export function FunnelTemplate({ config }: { config: FunnelConfig }) {
             <SectionLabel className="mb-0">Knobs</SectionLabel>
             <button
               onClick={reset}
+              data-testid="vivid-reset"
               className="text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               Reset

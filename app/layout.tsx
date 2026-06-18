@@ -71,7 +71,12 @@ export default function RootLayout({
 (function(){
   var vid=localStorage.getItem('_vivid_vid');
   if(!vid){vid=([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(c){return(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16);});localStorage.setItem('_vivid_vid',vid);}
-  pendo.initialize({visitor:{id:vid}});
+  var p=new URLSearchParams(window.location.search);
+  var v={id:vid};
+  if(p.get('utm_source'))v.utm_source=p.get('utm_source');
+  if(p.get('utm_medium'))v.utm_medium=p.get('utm_medium');
+  if(p.get('utm_campaign'))v.utm_campaign=p.get('utm_campaign');
+  pendo.initialize({visitor:v});
 })();`
       }} />
       <body className="min-h-screen font-sans antialiased">{children}</body>

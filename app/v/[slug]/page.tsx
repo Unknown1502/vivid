@@ -89,7 +89,9 @@ export default async function ExplainerPage({
         </div>
 
         {/* The interactive explainer (renderer adds its own frame + hint) */}
-        <TemplateRenderer config={record.config} />
+        <div data-vivid-context="explainer">
+          <TemplateRenderer config={record.config} />
+        </div>
 
         {/* Novus dogfood: real interaction pulse + a tiny improve agent */}
         <div className="mt-5 flex flex-col gap-3">
