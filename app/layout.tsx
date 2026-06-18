@@ -60,7 +60,7 @@ export default function RootLayout({
   const novusSrc = process.env.NEXT_PUBLIC_NOVUS_SRC;
   return (
     <html lang="en" className={`dark ${display.variable} ${sans.variable}`}>
-      <Script id="pendo-install" strategy="beforeInteractive" dangerouslySetInnerHTML={{
+      <Script id="pendo-install" strategy="afterInteractive" dangerouslySetInnerHTML={{
         __html: `(function(apiKey){
     (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
     v=['initialize','identify','updateOptions','pageLoad','track','trackAgent'];for(w=0,x=v.length;w<x;++w)(function(m){
@@ -68,7 +68,11 @@ export default function RootLayout({
     y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
     z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
 })('29055749-ad53-421d-98ce-188f30dccfd0');
-pendo.initialize({ visitor: { id: '' } });`
+(function(){
+  var vid=localStorage.getItem('_vivid_vid');
+  if(!vid){vid=([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(c){return(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16);});localStorage.setItem('_vivid_vid',vid);}
+  pendo.initialize({visitor:{id:vid}});
+})();`
       }} />
       <body className="min-h-screen font-sans antialiased">{children}</body>
       {novusSrc ? (
